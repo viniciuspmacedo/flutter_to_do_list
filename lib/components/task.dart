@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:my_first_app/difficult_level.dart';
+import 'package:my_first_app/components/difficult_level.dart';
 
 class Task extends StatefulWidget {
   final String name;
   final String imageUrl;
   final int difficulty;
+  double level;
 
-  const Task(this.name, this.imageUrl, this.difficulty, {super.key});
+  Task(this.name, this.imageUrl, this.difficulty, {super.key, this.level=0});
+
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  int level = 0;
   int mastery = 0;
-  Color masteryColor (){
-    switch(mastery){
-      case 0: return Colors.blue;
-      case 1: return Colors.amber;
-      case 2: return Colors.orange;
-      case 3: return Colors.red;
-      case 4: return Colors.black;
-      default: return Colors.greenAccent;
+
+  Color masteryColor() {
+    switch (mastery) {
+      case 0:
+        return Colors.blue;
+      case 1:
+        return Colors.amber;
+      case 2:
+        return Colors.orange;
+      case 3:
+        return Colors.red;
+      case 4:
+        return Colors.black;
+      default:
+        return Colors.greenAccent;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double progress = (level / widget.difficulty) / 10;
+    double progress = (widget.level / widget.difficulty) / 10;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -36,8 +44,7 @@ class _TaskState extends State<Task> {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: masteryColor(),
-                borderRadius: BorderRadius.circular(4)),
+                color: masteryColor(), borderRadius: BorderRadius.circular(4)),
             height: 140,
           ),
           Column(
@@ -86,15 +93,12 @@ class _TaskState extends State<Task> {
                           height: 50,
                           width: 78,
                           child: ElevatedButton(
-                            style: const ButtonStyle(
-                                backgroundColor:
-                                MaterialStatePropertyAll(Colors.blue)),
                             onPressed: () {
                               setState(() {
-                                level++;
+                                widget.level++;
                                 if (progress == 1) {
-                                  level = 0;
-                                  mastery ++;
+                                  widget.level = 0;
+                                  mastery++;
                                 }
                               });
                             },
@@ -104,12 +108,12 @@ class _TaskState extends State<Task> {
                               children: [
                                 Icon(
                                   Icons.arrow_drop_up,
-                                  color: Colors.white,
                                 ),
                                 Text(
-                                  "Lvl UP",
+                                  "UP",
                                   style: TextStyle(
-                                      fontSize: 10, color: Colors.white),
+                                    fontSize: 14,
+                                  ),
                                 )
                               ],
                             ),
@@ -126,9 +130,7 @@ class _TaskState extends State<Task> {
                     child: SizedBox(
                       width: 200,
                       child: LinearProgressIndicator(
-                        value: widget.difficulty >= 1
-                            ? progress
-                            : 1,
+                        value: widget.difficulty >= 1 ? progress : 1,
                         color: Colors.white,
                       ),
                     ),
@@ -136,7 +138,7 @@ class _TaskState extends State<Task> {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      "Nivel: $level",
+                      "Nivel: ${widget.level}",
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
