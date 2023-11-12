@@ -1,4 +1,4 @@
-<h1>Lista de tarefas</h1>
+<h1>App Lista de tarefas</h1>
 
 <p>Este é um aplicativo desenvolvido com fins didáticos acompanhado curso de Formação Flutter na Alura Cursos Online</p>
 
